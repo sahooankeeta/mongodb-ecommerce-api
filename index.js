@@ -1,5 +1,5 @@
 const express = require("express");
-const serverless = require("serverless-http");
+
 const mongoose = require("mongoose");
 const app = express();
 const bodyParser = require("body-parser");
@@ -15,7 +15,7 @@ mongoose.connect(DB).then((con) => {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/.netlify/functions/index", require("./routes"));
+app.use("/", require("./routes"));
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
@@ -28,4 +28,3 @@ app.listen(port, function (err) {
   }
   console.log(`server running on ${port}`);
 });
-module.exports.handler = serverless(app);
